@@ -20,10 +20,10 @@ echo "-----> CLIENT_DIR: $CLIENT_DIR" # client
 
 if [ -f $ENV_DIR/PROJECT_PATH ]; then
 	PROJECT_PATH=`cat $ENV_DIR/PROJECT_PATH` # server
-	CLIENT_PATH=`cat $ENV_DIR/client` # client
+	CLIENT_PATH=`cat $ENV_DIR/` + "client" # client
 
 	echo "-----> PROJECT_PATH: $PROJECT_PATH" # server
-	echo "-----> CLIENT_PATH: $CLIENT_PATH" # server
+	echo "-----> CLIENT_PATH: $CLIENT_PATH" # client
 
 	if [ -d $BUILD_DIR/$PROJECT_PATH ]; then
 		echo "-----> Subdir buildpack in $PROJECT_PATH"
