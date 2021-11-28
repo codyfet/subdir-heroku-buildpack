@@ -8,12 +8,19 @@ BUILD_DIR=${1:-}
 CACHE_DIR=${2:-}
 ENV_DIR=${3:-}
 
-echo "-----> BUILD_DIR: $BUILD_DIR"
-echo "-----> CACHE_DIR: $CACHE_DIR"
-echo "-----> ENV_DIR: $ENV_DIR"
+# SERVER_DIR=${4:-}
+# FRONTEND_DIR=${5:-}
+
+echo "-----> BUILD_DIR: $BUILD_DIR" # /tmp/build_83c1fee9
+echo "-----> CACHE_DIR: $CACHE_DIR" # /tmp/codon/tmp/cache
+echo "-----> ENV_DIR: $ENV_DIR" # /tmp/d20211128-55-1op8akq
+
+# echo "-----> SERVER_DIR: $SERVER_DIR" # server
+# echo "-----> FRONTEND_DIR: $FRONTEND_DIR" # client
 
 if [ -f $ENV_DIR/PROJECT_PATH ]; then
-	PROJECT_PATH=`cat $ENV_DIR/PROJECT_PATH`
+	PROJECT_PATH=`cat $ENV_DIR/PROJECT_PATH` # server
+
 	if [ -d $BUILD_DIR/$PROJECT_PATH ]; then
 		echo "-----> Subdir buildpack in $PROJECT_PATH"
 		echo "       creating cache: $CACHE_DIR"
@@ -22,6 +29,10 @@ if [ -f $ENV_DIR/PROJECT_PATH ]; then
 		echo "       created tmp dir: $TMP_DIR"
 		echo "       moving working dir: $PROJECT_PATH to $TMP_DIR"
 		cp -R $BUILD_DIR/$PROJECT_PATH/. $TMP_DIR/
+
+		echo "       moving working dir: client to $TMP_DIR"
+		cp -R $BUILD_DIR/client/. $TMP_DIR/
+
 	 	echo "       cleaning build dir $BUILD_DIR"
 		rm -rf $BUILD_DIR/*
 		echo "       copying preserved work dir from cache $TMP_DIR to build dir $BUILD_DIR"
