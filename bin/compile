@@ -25,6 +25,8 @@ if [ -f $ENV_DIR/PROJECT_PATH ]; then
 	echo "-----> PROJECT_PATH: $PROJECT_PATH" # server
 	echo "-----> CLIENT_PATH: $CLIENT_PATH" # client
 
+	ls $BUILD_DIR
+
 	if [ -d $BUILD_DIR/$PROJECT_PATH ]; then
 		echo "-----> Subdir buildpack in $PROJECT_PATH"
 		echo "       creating cache: $CACHE_DIR"
