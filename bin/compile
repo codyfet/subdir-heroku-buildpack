@@ -9,17 +9,21 @@ CACHE_DIR=${2:-}
 ENV_DIR=${3:-}
 
 SERVER_DIR="server"
-FRONTEND_DIR="client"
+CLIENT_DIR="client"
 
 echo "-----> BUILD_DIR: $BUILD_DIR" # /tmp/build_83c1fee9
 echo "-----> CACHE_DIR: $CACHE_DIR" # /tmp/codon/tmp/cache
 echo "-----> ENV_DIR: $ENV_DIR" # /tmp/d20211128-55-1op8akq
 
 echo "-----> SERVER_DIR: $SERVER_DIR" # server
-echo "-----> FRONTEND_DIR: $FRONTEND_DIR" # client
+echo "-----> CLIENT_DIR: $CLIENT_DIR" # client
 
 if [ -f $ENV_DIR/PROJECT_PATH ]; then
 	PROJECT_PATH=`cat $ENV_DIR/PROJECT_PATH` # server
+	CLIENT_PATH=`cat $ENV_DIR/client` # client
+
+	echo "-----> PROJECT_PATH: $PROJECT_PATH" # server
+	echo "-----> CLIENT_PATH: $CLIENT_PATH" # server
 
 	if [ -d $BUILD_DIR/$PROJECT_PATH ]; then
 		echo "-----> Subdir buildpack in $PROJECT_PATH"
@@ -31,7 +35,7 @@ if [ -f $ENV_DIR/PROJECT_PATH ]; then
 		cp -R $BUILD_DIR/$PROJECT_PATH/. $TMP_DIR/
 
 		echo "       moving working dir: client to $TMP_DIR"
-		cp -R $ENV_DIR/client/. $TMP_DIR/
+		cp -R $BUILD_DIR/$CLIENT_PATH/. $TMP_DIR/
 
 	 	echo "       cleaning build dir $BUILD_DIR"
 		rm -rf $BUILD_DIR/*
