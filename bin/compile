@@ -25,7 +25,8 @@ if [ -f $ENV_DIR/PROJECT_PATH ]; then
 	echo "-----> PROJECT_PATH: $PROJECT_PATH" # server
 	echo "-----> CLIENT_PATH: $CLIENT_PATH" # client
 
-	ls $BUILD_DIR
+	echo "-----> BUILD_DIR содержимое:"
+	ls $BUILD_DIR # client, server, Procfile
 
 	if [ -d $BUILD_DIR/$PROJECT_PATH ]; then
 		echo "-----> Subdir buildpack in $PROJECT_PATH"
@@ -33,11 +34,15 @@ if [ -f $ENV_DIR/PROJECT_PATH ]; then
 		mkdir -p $CACHE_DIR
 		TMP_DIR=`mktemp -d $CACHE_DIR/subdirXXXXX`
 		echo "       created tmp dir: $TMP_DIR"
+
+		echo "-----> TMP_DIR содержимое:"
+		ls $TMP_DIR # client, server, Procfile
+
 		echo "       moving working dir: $PROJECT_PATH to $TMP_DIR"
 		cp -R $BUILD_DIR/$PROJECT_PATH/. $TMP_DIR/
 
-		echo "       moving working dir: client to $TMP_DIR"
-		cp -R $BUILD_DIR/$CLIENT_PATH/. $TMP_DIR/
+		# echo "       moving working dir: client to $TMP_DIR"
+		# cp -R $BUILD_DIR/$CLIENT_PATH/. $TMP_DIR/
 
 	 	echo "       cleaning build dir $BUILD_DIR"
 		rm -rf $BUILD_DIR/*
